@@ -1,6 +1,7 @@
 package com.example.hydropome.ui.personalization.constants
 
-import com.example.hydropome.ui.personalization.mdoel.Question
+import com.example.hydropome.R
+import com.example.hydropome.ui.personalization.model.Question
 
 val questions = listOf(
     listOf(
@@ -63,6 +64,11 @@ val questions = listOf(
         Question(
             id = "5",
             title = "Berapa luas area tanam yang kamu miliki?",
+            answerImage = listOf(
+                R.drawable.img_land_0,
+                R.drawable.img_land_1,
+                R.drawable.img_land_2,
+            ),
             answers = listOf(
                 "< 1 m²",
                 "1–3 m²",

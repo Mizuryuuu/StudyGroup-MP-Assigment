@@ -2,15 +2,19 @@ package com.example.hydropome.ui.personalization.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,10 +23,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.hydropome.R
-import com.example.hydropome.ui.personalization.mdoel.Question
+import com.example.hydropome.ui.personalization.model.Question
+import com.example.hydropome.ui.theme.AppColors
 import com.example.hydropome.ui.theme.HydropomeTheme
 
 @Composable
@@ -55,8 +63,87 @@ fun QuestionCard(
             Spacer(Modifier.width(8.dp))
             Text(
                 text = question.title,
-
+                color = AppColors.text,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W600,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2
             )
+        }
+        question.answers.forEachIndexed { index, answer ->
+            val isSelected = selectedAnswers[index]
+
+            Spacer(Modifier.height(12.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .defaultMinSize(minHeight = 48.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .let {
+                        if (isSelected) {
+                            it.border(
+                                width = 1.dp,
+                                color = Color(0xFF179778),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                        } else {
+                            it
+                        }
+                    }
+                    .background(if (isSelected) Color(0xFFE8F5F2) else Color(0xFFF7F8F9))
+                    .clickable {
+                        val newSelectedAnswers = selectedAnswers.toMutableList()
+
+                        if(isSelected) {
+                            newSelectedAnswers[index] = false
+                        } else {
+                            if(question.isMultipleAnswer) {
+                                newSelectedAnswers[index] = true
+                            } else {
+                                newSelectedAnswers.replaceAll { false }
+                                newSelectedAnswers[index] = true
+                            }
+                        }
+                        onSelectedAnswersChange(newSelectedAnswers)
+                    }
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = if (question.isMultipleAnswer){
+                        if(isSelected) {
+                            painterResource(R.drawable.ic_checkbox_selected)
+                        } else {
+                            painterResource(R.drawable.ic_checkbox_unselected)
+                        }
+                    } else {
+                        if (isSelected) {
+                            painterResource(R.drawable.ic_radio_button_selected)
+                        } else {
+                            painterResource(R.drawable.ic_radio_button_selected)
+                        }
+                    },
+                    contentDescription = null,
+                    modifier = Modifier.size(if(question.isMultipleAnswer) 24.dp else 30.dp),
+                    tint = if(isSelected) AppColors.primary else Color(0xFFB4B5B6)
+                )
+                Spacer(Modifier.width(if(question.answerImage != null) 16.dp else 12.dp))
+                question.answerImage?.let { answerImages ->
+                    Image(
+                        painter = painterResource(answerImages[index]),
+                        contentDescription = null
+                    )
+                    Spacer(Modifier.width(48.dp))
+                }
+                Text(
+                    text = answer,
+                    color = AppColors.text,
+                    fontSize = 12.sp,
+                    fontWeight = if (question.answerImage != null) FontWeight.W600 else FontWeight.W400,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2
+                )
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.hydropome.ui.personalization.mdoel
+package com.example.hydropome.ui.personalization.model
 
 import androidx.annotation.DrawableRes
 
