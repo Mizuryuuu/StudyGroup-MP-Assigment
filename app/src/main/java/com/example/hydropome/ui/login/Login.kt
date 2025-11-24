@@ -65,6 +65,9 @@ fun Login(){
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.Black)
         }
 
+        Spacer(modifier = Modifier.height(40.dp))
+
+
         Text(
             text = "Selamat Datang Kembali",
             fontSize = 24.sp,
@@ -79,7 +82,7 @@ fun Login(){
             color = Color.Black
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(46.dp))
 
         Text(
             text = "Username", // Saya sesuaikan labelnya dengan input di bawahnya
