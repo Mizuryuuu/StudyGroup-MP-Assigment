@@ -10,16 +10,14 @@ val IntBackground = Color(0xFFF5F6FA)
 val TextDark = Color(0xFF111111)
 val TextLight = Color(0xFFFFFFFF)
 
-// OUTLINE TEXTFIELD
-val OutlineDefault = Color(0xFFE0E0E0)
-val OutlineFocused = BrandGreen
+
+
 
 
 object AppColors {
     val primary = BrandGreen
-    val background = IntBackground
+
     val text = TextDark
     val textLight = TextLight
-    val outline = OutlineDefault
-    val outlineFocused = OutlineFocused
+
 }
