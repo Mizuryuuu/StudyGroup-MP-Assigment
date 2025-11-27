@@ -9,6 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.hydropome.ui.personalization.PersonalizationScreen
 import com.example.hydropome.ui.personalization.PersonalizationViewModel
+import com.example.hydropome.ui.plantprogress.PlantProgressScreen
+import com.example.hydropome.ui.plantprogress.PlantProgressUiState
+import com.example.hydropome.ui.plantprogress.PlantProgressViewModel
 
 @Composable
 fun AppNavHost() {
@@ -16,7 +19,7 @@ fun AppNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = AppDestination.Personalization
+        startDestination = AppDestination.PlantProgress("plant_01")
     ) {
         composable<AppDestination.Personalization> {
             val viewModel: PersonalizationViewModel = viewModel()
@@ -31,8 +34,21 @@ fun AppNavHost() {
             )
         }
 
-        composable<AppDestination.Main> {
+        composable<AppDestination.PlantProgress> {
+            val viewModel: PlantProgressViewModel = viewModel()
+            val uiState by viewModel.uiState.collectAsState()
 
+            PlantProgressScreen(
+                plantProgressId = "progress_001",
+                uiState = uiState,
+
+                onPlantProgressRefresh = viewModel::getIdPlantProgress,
+                onTaskCompletionChange = viewModel::onTaskCompletionChange,
+                onCompleteDay = { },
+                onCompleteProgress = { _ -> },
+
+                navController = navController
+            )
         }
     }
 }
