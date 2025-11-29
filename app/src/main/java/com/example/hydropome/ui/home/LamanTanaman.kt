@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +29,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -40,43 +38,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.example.hydropome.R
+import com.example.hydropome.ui.common.shape.BottomArcShape
 import com.example.hydropome.ui.home.Data.DataTanaman
-import com.example.hydropome.ui.theme.Abuabu
 import com.example.hydropome.ui.theme.AbuabuBackgroundBottom
 import com.example.hydropome.ui.theme.AbuabuText
 import com.example.hydropome.ui.theme.AbuabuTextSerch
+import com.example.hydropome.ui.theme.AppColors
 import com.example.hydropome.ui.theme.HijauNormal
-
-@Composable
-fun Numbering (number: Int) {
-    for (i in 1..number) {
-        Text(
-            text = "$i.",
-            fontSize = 14.sp
-        )
-    }
-}
-
-@Composable
-fun ToolsItem(name: String, description: String?) {
-    Text(
-        text = buildAnnotatedString {
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color.Black)) {
-                append(name)
-            }
-            append(" ")
-
-            // Description jadi abu abu
-            description?.let {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = Color.Gray)) {
-                    append(it)
-                }
-            }
-        },
-        fontSize = 14.sp
-    )
-}
 
 @Composable
 fun ToolsAndMaterials(tools: List<Pair<String, String?>>) {
@@ -115,8 +85,9 @@ fun ToolsAndMaterials(tools: List<Pair<String, String?>>) {
 }
 
 @Composable
-@Preview
-fun LamanTanaman () {
+fun LamanTanaman(
+    onBack: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -126,7 +97,9 @@ fun LamanTanaman () {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(301.dp)
+                    .height(256.dp)
+                    .clip(BottomArcShape())
+                    .background(AppColors.background)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.selada_hidroponik),
@@ -138,7 +111,7 @@ fun LamanTanaman () {
                 )
 
                 Button(
-                    onClick = { /* TODO */ },
+                    onClick = onBack,
                     modifier = Modifier
                         .size(40.dp)
                         .align(Alignment.TopStart)
@@ -410,4 +383,12 @@ fun LamanTanaman () {
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun LamanTanamanPreview() {
+    LamanTanaman(
+        onBack = {}
+    )
 }

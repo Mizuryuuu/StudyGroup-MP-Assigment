@@ -9,4 +9,10 @@ sealed class AppDestination {
 
     @Serializable
     data object Main : AppDestination()
+
+    @Serializable
+    object Home : AppDestination()
+
+    @Serializable
+    object LamanTanaman : AppDestination()
 }

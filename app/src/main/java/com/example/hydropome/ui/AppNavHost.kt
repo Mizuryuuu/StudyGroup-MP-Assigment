@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.hydropome.ui.personalization.PersonalizationScreen
 import com.example.hydropome.ui.personalization.PersonalizationViewModel
+import com.example.wasapp.ui.screens.Homepage
+import com.example.wasapp.ui.screens.LamanTanaman
 
 @Composable
 fun AppNavHost() {
@@ -32,7 +34,23 @@ fun AppNavHost() {
         }
 
         composable<AppDestination.Main> {
+            navController.navigate(AppDestination.Home) {
+                popUpTo(AppDestination.Personalization) { inclusive = true }
+            }
+        }
 
+        composable<AppDestination.Home>{
+            Homepage(
+                onNavigateToLamanTanaman = {
+                    navController.navigate(AppDestination.LamanTanaman)
+                }
+            )
+        }
+
+        composable<AppDestination.LamanTanaman> {
+            LamanTanaman(
+                onBack = { navController.navigate(AppDestination.Home) }
+            )
         }
     }
 }

@@ -2,21 +2,18 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="app">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-<<<<<<< HEAD
-=======
-      <SelectionState runConfigName="LamanTanaman">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="ChatPage">
+      <SelectionState runConfigName="MainActivity">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="Homepage">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
->>>>>>> munif
+      <SelectionState runConfigName="PersonalizationScreenPreview">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="LamanTanamanPreview">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>

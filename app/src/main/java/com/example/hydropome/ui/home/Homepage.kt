@@ -1,22 +1,13 @@
 package com.example.wasapp.ui.screens
 
-<<<<<<< HEAD
-import android.view.View
-import com.example.hydropome.R
-=======
-import android.R.attr.text
->>>>>>> munif
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-<<<<<<< HEAD
-import androidx.compose.foundation.layout.fillMaxHeight
-=======
->>>>>>> munif
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,35 +20,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-<<<<<<< HEAD
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
-=======
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
->>>>>>> munif
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-<<<<<<< HEAD
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-=======
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -67,64 +36,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hydropome.R
+import com.example.hydropome.ui.common.shape.BottomArcShape
 import com.example.hydropome.ui.home.Data.DataTanaman
 import com.example.hydropome.ui.home.Data.DataTanaman.PlantList
->>>>>>> munif
 import com.example.hydropome.ui.theme.Abuabu
 import com.example.hydropome.ui.theme.AbuabuText
 import com.example.hydropome.ui.theme.AbuabuTextSerch
-import com.example.hydropome.ui.theme.HijauNormal
+import com.example.hydropome.ui.theme.AppColors
 
-<<<<<<< HEAD
-//DataTanaman
-data class  PlantItem(
-    val image : Int,
-    val name : String,
-    val level : String,
-    val duration : String
-)
-
-val PlantList = listOf(
-    PlantItem(
-        image = R.drawable.selada_hidroponik,
-        name = "Selada Hidroponik",
-        level = "Mudah",
-        duration = "3-5 Minggu"
-    ),
-    PlantItem(
-        image = R.drawable.selada_hidroponik,
-        name = "Selada Hidroponik",
-        level = "Mudah",
-        duration = "3-5 Minggu"
-    ),
-    PlantItem(
-        image = R.drawable.selada_hidroponik,
-        name = "Selada Hidroponik",
-        level = "Mudah",
-        duration = "3-5 Minggu"
-    ),
-    PlantItem(
-        image = R.drawable.selada_hidroponik,
-        name = "Selada Hidroponik",
-        level = "Mudah",
-        duration = "3-5 Minggu"
-    ),
-    PlantItem(
-        image = R.drawable.selada_hidroponik,
-        name = "Selada Hidroponik",
-        level = "Mudah",
-        duration = "3-5 Minggu"
-    ),
-    PlantItem(
-        image = R.drawable.selada_hidroponik,
-        name = "Selada Hidroponik",
-        level = "Mudah",
-        duration = "3-5 Minggu"
-    )
-)
-
-=======
->>>>>>> munif
 //DataStarterKit
 data class StarterKitItem (
     val image : Int,
@@ -166,11 +85,11 @@ val StarterKitList = listOf(
 )
 
 @Composable
-<<<<<<< HEAD
-fun PlantCard (item: PlantItem, modifier: Modifier = Modifier) {
-=======
-fun PlantCard (item: DataTanaman.PlantItem, modifier: Modifier = Modifier) {
->>>>>>> munif
+fun PlantCard (
+    item: DataTanaman.PlantItem,
+    modifier: Modifier = Modifier,
+    onNavigateToLamanTanaman: () -> Unit
+) {
     Column(
         modifier = modifier
             .padding(8.dp)
@@ -182,6 +101,7 @@ fun PlantCard (item: DataTanaman.PlantItem, modifier: Modifier = Modifier) {
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White)
             .padding(8.dp)
+            .clickable(onClick = onNavigateToLamanTanaman)
     ) {
         Row {
             Column {
@@ -203,16 +123,6 @@ fun PlantCard (item: DataTanaman.PlantItem, modifier: Modifier = Modifier) {
                 )
             }
         }
-<<<<<<< HEAD
-        Row (
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ){
-            Text(item.level, color = Color.Gray, fontSize = 12.sp)
-            Text(item.duration, color = Color.Gray, fontSize = 12.sp)
-=======
         Row(
             modifier = Modifier
                 .height(14.dp)
@@ -230,7 +140,7 @@ fun PlantCard (item: DataTanaman.PlantItem, modifier: Modifier = Modifier) {
                 val levelTanaman = PlantList[0].level
                 Text(
                     text = levelTanaman,
-                    color = HijauNormal,
+                    color = AppColors.primary,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.ExtraLight
                 )
@@ -254,7 +164,6 @@ fun PlantCard (item: DataTanaman.PlantItem, modifier: Modifier = Modifier) {
                     fontWeight = FontWeight.ExtraLight
                 )
             }
->>>>>>> munif
         }
     }
 }
@@ -284,24 +193,6 @@ fun StarterKitCard (item: StarterKitItem, modifier: Modifier = Modifier) {
                         .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Crop
                 )
-<<<<<<< HEAD
-
-                Spacer(Modifier.height(8.dp))
-
-                Text(
-                    text = item.category,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-                Text(item.name, fontWeight = FontWeight.Bold)
-            }
-        }
-
-        Row {
-            Text(text = item.discountPrince)
-            Text(text = item.price)
-=======
                 Text(
                     text = item.category,
                     fontWeight = FontWeight.ExtraLight,
@@ -326,7 +217,7 @@ fun StarterKitCard (item: StarterKitItem, modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = item.discountPrince,
-                    color = HijauNormal,
+                    color = AppColors.primary,
                     fontSize = 12.sp
                 )
             }
@@ -343,7 +234,6 @@ fun StarterKitCard (item: StarterKitItem, modifier: Modifier = Modifier) {
                     textDecoration = TextDecoration.LineThrough,
                 )
             }
->>>>>>> munif
         }
     }
 }
@@ -351,50 +241,27 @@ fun StarterKitCard (item: StarterKitItem, modifier: Modifier = Modifier) {
 
 @Composable
 @Preview
-<<<<<<< HEAD
-fun ChatPage () {
-
-=======
-fun Homepage() {
->>>>>>> munif
+fun Homepage(
+    onNavigateToLamanTanaman: () -> Unit = {}
+) {
     //Homepage
     Box (
         modifier = Modifier
             .fillMaxSize()
-<<<<<<< HEAD
-            .background(Color.White)
             .verticalScroll(rememberScrollState())
     ) {
-
-        Box (
-            modifier = Modifier
-                .height(239.dp)
-                .background(Color.Green)
-        ) {
-
-        }
-=======
-            .verticalScroll(rememberScrollState())
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-                .background(color = HijauNormal) // warna contoh
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+            .clip(BottomArcShape())
+            .background(color = AppColors.background)
         )
->>>>>>> munif
 
         //Container-Content --Start--
         Column {
             Spacer(modifier = Modifier
-<<<<<<< HEAD
-                .height(60  .dp)
-            )
-
-=======
                 .height(60.dp)
             )
->>>>>>> munif
             //Content1-Header --Start--
             Row(
                 modifier = Modifier
@@ -411,11 +278,13 @@ fun Homepage() {
                         text = "Halo, Userrrr",
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
+                        color = AppColors.textLight
                     )
                     Text(
                         text = "Berkebun Apa Hari Ini?",
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 20.sp,
+                        color = AppColors.textLight
                     )
                 }
 
@@ -468,16 +337,12 @@ fun Homepage() {
                         Column (
                             modifier = Modifier
                                 .fillMaxSize()
-<<<<<<< HEAD
-                                .padding(top = 35.5.dp, end = 119.dp, bottom = 35.5.dp, start = 16.dp),
-=======
                                 .padding(
                                     top = 35.5.dp,
                                     end = 119.dp,
                                     bottom = 35.5.dp,
                                     start = 16.dp
                                 ),
->>>>>>> munif
                             verticalArrangement = Arrangement.SpaceBetween
                         ){
                             Text(
@@ -534,13 +399,6 @@ fun Homepage() {
                             verticalArrangement = Arrangement.Center
                         ) {
                             Text(
-<<<<<<< HEAD
-                                text = "Cari tanaman...",
-                                color = AbuabuTextSerch,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.ExtraBold
-                            )
-=======
                                 text = "Cari Tanaman...",
                                 color = AbuabuTextSerch,
                             )
@@ -552,7 +410,6 @@ fun Homepage() {
 //                                singleLine = true,
 //                                textStyle = LocalTextStyle.current,
 //                            )
->>>>>>> munif
                         }
                     }
                 }
@@ -589,7 +446,7 @@ fun Homepage() {
                             text = "Lihat Semua",
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp,
-                            color = HijauNormal,
+                            color = AppColors.primary,
                             modifier = Modifier
                                 .padding(top = 5.dp)
                         )
@@ -609,13 +466,10 @@ fun Homepage() {
                                 .fillMaxSize()
                         ) {
                             items(PlantList.size) { index ->
-<<<<<<< HEAD
-                                PlantCard(item = PlantList[index])
-=======
                                 PlantCard(
                                     item = PlantList[index],
+                                    onNavigateToLamanTanaman = onNavigateToLamanTanaman
                                 )
->>>>>>> munif
                             }
                         }
                     }
