@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -238,9 +240,7 @@ fun StarterKitCard (item: StarterKitItem, modifier: Modifier = Modifier) {
     }
 }
 
-
 @Composable
-@Preview
 fun Homepage(
     onNavigateToLamanTanaman: () -> Unit = {}
 ) {
@@ -528,4 +528,10 @@ fun Homepage(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun HomepagePreview() {
+    Homepage()
 }
