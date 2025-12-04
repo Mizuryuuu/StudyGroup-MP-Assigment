@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -105,6 +106,8 @@ fun LoginScreen(
                 color = AppColors.text
             )
             Spacer(modifier = Modifier.height(8.dp))
+            var passwordVisible by remember { mutableStateOf(false) }
+
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -112,7 +115,24 @@ fun LoginScreen(
                 singleLine = true,
                 placeholder = { Text("Masukkan Password") },
                 shape = RoundedCornerShape(10.dp),
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = if (passwordVisible)
+                    VisualTransformation.None
+                else
+                    PasswordVisualTransformation(),
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(
+                            id = if (passwordVisible)
+                                R.drawable.visibility_off_24dp_ffffff_fill0_wght400_grad0_opsz24
+                            else
+                                R.drawable.visibility_24dp_ffffff_fill0_wght400_grad0_opsz24
+                        ),
+                        contentDescription = if (passwordVisible) "Sembunyikan" else "Tampilkan",
+                        modifier = Modifier.clickable {
+                            passwordVisible = !passwordVisible
+                        }
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(32.dp))
