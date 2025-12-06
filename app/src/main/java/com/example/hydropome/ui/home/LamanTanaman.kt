@@ -42,11 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hydropome.R
 import com.example.hydropome.ui.home.Data.DataTanaman
-import com.example.hydropome.ui.theme.Abuabu
-import com.example.hydropome.ui.theme.AbuabuBackgroundBottom
 import com.example.hydropome.ui.theme.AbuabuText
 import com.example.hydropome.ui.theme.AbuabuTextSerch
-import com.example.hydropome.ui.theme.HijauNormal
+import com.example.hydropome.ui.theme.AppColors
 
 @Composable
 fun Numbering (number: Int) {
@@ -144,7 +142,7 @@ fun LamanTanaman () {
                         .align(Alignment.TopStart)
                         .offset(x = 20.dp, y = 52.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = AbuabuBackgroundBottom
+                        containerColor = AppColors.background
                     ),
                     shape = RoundedCornerShape(16.dp),
                     contentPadding = PaddingValues(0.dp)
@@ -204,7 +202,7 @@ fun LamanTanaman () {
                                 val levelTanaman = DataTanaman.PlantList[0].level
                                 Text(
                                     text = levelTanaman,
-                                    color = HijauNormal
+                                    color = AppColors.primary
                                 )
                             }
 
@@ -336,7 +334,7 @@ fun LamanTanaman () {
                                         modifier = Modifier
                                             .size(48.dp),
                                         colors = ButtonDefaults.buttonColors(
-                                            containerColor = AbuabuBackgroundBottom
+                                            containerColor = AppColors.background
                                         ),
                                         shape = RoundedCornerShape(16.dp),
                                         contentPadding = PaddingValues(0.dp)
@@ -392,7 +390,7 @@ fun LamanTanaman () {
                                 .fillMaxSize()
                                 .clip(shape = RoundedCornerShape(16.dp)),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = HijauNormal
+                                containerColor = AppColors.primary
                             ),
                             shape = RoundedCornerShape(16.dp),
                             contentPadding = PaddingValues(0.dp)
