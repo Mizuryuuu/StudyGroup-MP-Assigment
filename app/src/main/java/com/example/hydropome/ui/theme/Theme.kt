@@ -1,30 +1,28 @@
 package com.example.hydropome.ui.theme
 
+import android.app.Activity
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
-// Skema warna utama aplikasi
-private val LightColorScheme = lightColorScheme(
-    primary = BrandGreen,
-    background = IntBackground,
-    surface = Color.White,
-    onPrimary = TextLight,
-    onBackground = TextDark,
-    onSurface = TextDark
-)
 
-/**
- * Fungsi tema utama yang dipakai di MainActivity, Login, Register, dsb.
- */
 @Composable
 fun HydropomeTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colorScheme = LightColorScheme,
-        typography = Typography,   // Typography sudah ada di Type.kt
+        colorScheme = lightColorScheme(
+            primary = AppColors.primary,
+            background = Color(0xFFFFFFFF)
+        ),
+        typography = Typography,
         content = content
     )
 }

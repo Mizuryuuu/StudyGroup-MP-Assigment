@@ -2,22 +2,20 @@ package com.example.hydropome.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// WARNA BRAND
-val BrandGreen = Color(0xFF1B9A77)
-val IntBackground = Color(0xFFF5F6FA)
-
-// WARNA TEKS
-val TextDark = Color(0xFF111111)
-val TextLight = Color(0xFFFFFFFF)
-
-
-
-
-
 object AppColors {
-    val primary = BrandGreen
-
-    val text = TextDark
-    val textLight = TextLight
-
+    val primary = Color(0xFF179778)
+    val background = Color(0xFF093731)
+    val text = Color(0xFF111111)
+    val textLight = Color(0xFFFFFFFF)
+    val difficultyEasy = primary
+    val difficultyMedium = Color(0xFFE56C3F)
+    val difficultyHard = Color(0xFFC10101)
 }
+val Abuabu = Color(0xFFF4F5F7)
+val AbuabuText = Color(0xFF757575)
+
+val AbuabuTextSerch = Color(0xFF98A0AA)
+
+val Purple40 = Color(0xFF6650a4)
+val PurpleGrey40 = Color(0xFF625b71)
+val Pink40 = Color(0xFF7D5260)

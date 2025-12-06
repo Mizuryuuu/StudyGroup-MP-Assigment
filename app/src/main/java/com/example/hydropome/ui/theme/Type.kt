@@ -2,9 +2,17 @@ package com.example.hydropome.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.hydropome.R
+
+val plusJakartaSansFontFamily = FontFamily(
+    Font(R.font.plus_jakarta_sans_w400, FontWeight.W400),
+    Font(R.font.plus_jakarta_sans_w700, FontWeight.W600),
+    Font(R.font.plus_jakarta_sans_w700, FontWeight.W700)
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
