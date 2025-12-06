@@ -81,7 +81,7 @@ fun PlantProgressScreen(
                 title = "Pantau Tanaman",
                 onNavigationActionClick = {
                     navController.popBackStack(
-                        AppDestination.Personalization,
+                        AppDestination.PlantProgress(plantProgressId),
                         true
                     )
                 }

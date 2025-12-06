@@ -1,5 +1,10 @@
-package com.example.wasapp.ui.screens
+package com.example.hydropome.ui.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,12 +24,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,372 +51,289 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.hydropome.R
+import com.example.hydropome.common.Difficulty
+import com.example.hydropome.common.Plant
+import com.example.hydropome.ui.AppDestination
+import com.example.hydropome.ui.common.components.BackButton
+import com.example.hydropome.ui.common.components.CustomButton
+import com.example.hydropome.ui.common.shape.BottomArcShape
 import com.example.hydropome.ui.home.Data.DataTanaman
 import com.example.hydropome.ui.theme.AbuabuText
 import com.example.hydropome.ui.theme.AbuabuTextSerch
 import com.example.hydropome.ui.theme.AppColors
+import com.example.hydropome.ui.theme.HydropomeTheme
 
 @Composable
-fun Numbering (number: Int) {
-    for (i in 1..number) {
-        Text(
-            text = "$i.",
-            fontSize = 14.sp
-        )
+fun LamanTanamanScreen(
+    plantId: String,
+    isStartPlantEnabled: Boolean,
+    uiState: LamanTanamanUiState,
+    videoPlayer: @Composable (String) -> Unit,
+    onPlantRefresh: (String) -> Unit,
+    onStartPlant: (() -> Unit) -> Unit,
+    navController: NavController
+) {
+    LaunchedEffect(Unit) {
+        onPlantRefresh(plantId)
     }
-}
 
-@Composable
-fun ToolsItem(name: String, description: String?) {
-    Text(
-        text = buildAnnotatedString {
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color.Black)) {
-                append(name)
-            }
-            append(" ")
-
-            // Description jadi abu abu
-            description?.let {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = Color.Gray)) {
-                    append(it)
-                }
-            }
-        },
-        fontSize = 14.sp
-    )
-}
-
-@Composable
-fun ToolsAndMaterials(tools: List<Pair<String, String?>>) {
-    Column {
-        tools.forEachIndexed { index, (name, description) ->
-            Row(
-                modifier = Modifier
-                    .padding(vertical = 4.dp))
-            {
-                // Nomor
-                Text(
-                    text = "${index + 1}.",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.width(3.dp))
-                // Nama + description dalam satu Text
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color.Black)) {
-                            append(name)
-                        }
-                        append(" ")
-                        description?.let {
-                            withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, color = Color.Gray)) {
-                                append(it)
-                            }
-                        }
-                    },
-                    fontSize = 12.sp
-                )
-            }
-        }
-    }
-}
-
-@Composable
-@Preview
-fun LamanTanaman () {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        Column {
+    Scaffold { innerPadding ->
+        AnimatedVisibility(
+            visible = uiState.isLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(301.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.selada_hidroponik),
-                    contentDescription = "image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
-                )
-
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .size(40.dp)
-                        .align(Alignment.TopStart)
-                        .offset(x = 20.dp, y = 52.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = AppColors.background
-                    ),
-                    shape = RoundedCornerShape(16.dp),
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.arrow_left),
-                        contentDescription = "image"
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(13.dp))
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(851.dp),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    modifier = Modifier
-                        .width(335.dp)
-                        .height(851.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
+                CircularProgressIndicator()
+            }
+        }
+        AnimatedVisibility(
+            visible = !uiState.isLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            uiState.plant?.let { plant ->
+                Box(
+                    modifier = Modifier.fillMaxSize()
                 ) {
+                    val scrollState = rememberScrollState()
 
-                    //Nama tanaman
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(64.dp)
+                    AnimatedVisibility(
+                        visible = scrollState.value == 0,
+                        enter = fadeIn() + expandVertically(),
+                        exit = shrinkVertically() + fadeOut()
                     ) {
-                        Row(
+                        Image(
+                            painter = painterResource(plant.image),
+                            contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight(0.5f)
-                        ) {
-                            Text(
-                                text = DataTanaman.PlantList[0].name,
-                                fontSize = 24.sp
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .width(215.dp)
-                                .height(165.dp),
-                            verticalAlignment = Alignment.Bottom,
-                        ) {
-                            Row (
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.ellipse_142),
-                                    contentDescription = "image",
-                                    modifier = Modifier.padding(end = 4.dp)
-                                )
-                                val levelTanaman = DataTanaman.PlantList[0].level
-                                Text(
-                                    text = levelTanaman,
-                                    color = AppColors.primary
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            Row (
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.clock),
-                                    contentDescription = "image",
-                                    modifier = Modifier.padding(end = 4.dp)
-                                )
-                                val levelTanaman = DataTanaman.PlantList[0].duration
-                                Text(
-                                    text = levelTanaman,
-                                    color = AbuabuTextSerch
-                                )
-                            }
-                        }
+                                .height(innerPadding.calculateTopPadding() + 256.dp)
+                                .clip(BottomArcShape()),
+                            contentScale = ContentScale.Crop
+                        )
                     }
-
-                    //Deskrpisi
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
+                            .fillMaxSize()
+                            .verticalScroll(scrollState)
+                            .padding(innerPadding)
+                            .padding(horizontal = 20.dp, vertical = 8.dp)
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .height(19.dp)
-                        ) {
-                            Text(
-                                text = "Deskripsi",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .height(133.dp)
-                        ) {
-                            Text(
-                                text = DataTanaman.PlantList[0].description,
-                                fontSize = 12.sp,
-                                lineHeight = 16.32.sp,
-                                color = AbuabuText,
-                                textAlign = TextAlign.Justify,
-                            )
-                        }
-                    }
-
-                    //Alat dan bahan
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(293.dp)
-                    ) {
-                        Row (
-                            modifier = Modifier
-                                .height(19.dp)
-                        ){
-                            Text(
-                                text = "Alat dan Bahan",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Row {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            ToolsAndMaterials(
-                                tools = DataTanaman.PlantList[0].toolsAndMaterials
-                            )
-                        }
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(262.dp)
-                    ) {
-                        Row (
-                            modifier = Modifier
-                                .padding(vertical = 8.dp)
-                        ){
-                            Text(
-                                text = "Tutorial Menanam",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-
-                        Column (
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(264.dp)
-                                .shadow(
-                                    elevation = 1.dp,
-                                    shape = RoundedCornerShape(16.dp),
-                                    clip = false
-                                )
-                                .clip(shape = RoundedCornerShape(16.dp))
-                                .background(Color.White),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Row (
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(194.dp)
-                                    .padding(vertical = 8.dp, horizontal = 8.dp)
-                                    .clip(shape = RoundedCornerShape(8.dp))
-                            ) {
-                                Box (
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    contentAlignment = Alignment.Center
-                                ){
-                                    Image(
-                                        painter = painterResource(DataTanaman.PlantList[0].tutorial),
-                                        contentDescription = "image",
-                                        contentScale = ContentScale.Crop
+                        Box {
+                            BackButton(
+                                onClick = {
+                                    navController.popBackStack(
+                                        AppDestination.PlantDetails(plantId, isStartPlantEnabled),
+                                        true
                                     )
-                                    Button(
-                                        onClick = { /* TODO */ },
-                                        modifier = Modifier
-                                            .size(48.dp),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = AppColors.background
-                                        ),
-                                        shape = RoundedCornerShape(16.dp),
-                                        contentPadding = PaddingValues(0.dp)
-                                    ) {
-                                        Image(
-                                            painter = painterResource(R.drawable.play_button),
-                                            contentDescription = "image"
+                                }
+                            )
+                            Spacer(Modifier.height(256.dp))
+                        }
+                        Spacer(Modifier.height(20.dp))
+                        Text(
+                            text = plant.title,
+                            color = AppColors.text,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.W700
+                        )
+                        Spacer(Modifier.height(16.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            val difficultyColor = when (plant.difficulty) {
+                                Difficulty.EASY -> AppColors.difficultyEasy
+                                Difficulty.MEDIUM -> AppColors.difficultyMedium
+                                Difficulty.HARD -> AppColors.difficultyHard
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .size(12.dp)
+                                    .clip(CircleShape)
+                                    .background(difficultyColor)
+                            )
+                            Spacer(Modifier.width(4.dp))
+                            Text(
+                                text = plant.difficulty.label,
+                                color = difficultyColor,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.W400
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Icon(
+                                painter = painterResource(R.drawable.clock),
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp),
+                                tint = Color(0xFF98A0AA)
+                            )
+                            Spacer(Modifier.width(4.dp))
+                            Text(
+                                text = "${plant.duration} Ming",
+                                color = Color(0xFF98A0AA),
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.W400
+                            )
+                        }
+                        Spacer(Modifier.height(24.dp))
+                        Text(
+                            text = "Deskripsi",
+                            color = Color(0xFF060707),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W700
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = plant.description,
+                            color = Color(0xFF757575),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.W400,
+                            textAlign = TextAlign.Justify
+                        )
+                        Spacer(Modifier.height(24.dp))
+                        Text(
+                            text = "Alat dan Bahan",
+                            color = Color(0xFF060707),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W700
+                        )
+                        Spacer(Modifier.height(8.dp))
+
+                        val annotatedString = buildAnnotatedString {
+                            plant.toolsAndMaterials.forEachIndexed { index, content ->
+                                append("${index + 1}. ")
+                                append(content.title)
+                                content.description?.let { description ->
+                                    withStyle(
+                                        style = SpanStyle(
+                                            color = Color(0xFF757575),
+                                            fontWeight = FontWeight.W400
                                         )
+                                    ) {
+                                        append(" - $description")
                                     }
                                 }
-                            }
-
-                            Row (
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(48.dp)
-                                    .padding(horizontal = 8.dp, vertical = 2.dp)
-                            ) {
-                                Text(
-                                    text = DataTanaman.PlantList[0].judulTutorial,
-                                    fontSize = 14.sp
-                                )
+                                append("\n")
                             }
                         }
-                    }
-                }
-            }
 
-            Spacer(
-                modifier = Modifier
-                    .height(49.dp)
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    modifier = Modifier
-                        .width(335.dp)
-                        .height(48.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .height(50.dp)
-                    ) {
-                        Button(
-                            onClick = { /* TODO */ },
+                        Text(
+                            text = annotatedString,
+                            color = AppColors.text,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.W700,
+                            textAlign = TextAlign.Justify
+                        )
+                        Spacer(Modifier.height(24.dp))
+                        Text(
+                            text = "Tutorial Menanam",
+                            color = Color(0xFF060707),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W700
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Column(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .clip(shape = RoundedCornerShape(16.dp)),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = AppColors.primary
-                            ),
-                            shape = RoundedCornerShape(16.dp),
-                            contentPadding = PaddingValues(0.dp)
+                                .fillMaxWidth()
+                                .shadow(
+                                    elevation = 8.dp,
+                                    shape = RoundedCornerShape(16.dp),
+                                    ambientColor = Color.Black.copy(alpha = 0.4f),
+                                    spotColor = Color.Black.copy(alpha = 0.4f)
+                                )
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(Color(0xFFFFFFFF))
+                                .padding(8.dp)
                         ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(16f / 9f)
+                                    .clip(RoundedCornerShape(10.dp))
+                            ) {
+                                videoPlayer(plant.videoTutorial)
+                            }
+                            Spacer(Modifier.height(8.dp))
                             Text(
-                                text = "Mulai Tanam dan Pantau"
+                                text = "Menanam ${plant.title}",
+                                color = AppColors.text,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.W700
+                            )
+                        }
+                        if (isStartPlantEnabled) {
+                            Spacer(Modifier.height(48.dp))
+                            CustomButton(
+                                text = "Mulai Tanam dan Pantau",
+                                onClick = {
+                                    onStartPlant {
+                                        navController.popBackStack(
+                                            AppDestination.PlantDetails(
+                                                plantId,
+                                                true
+                                            ),
+                                            true
+                                        )
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
                 }
             }
-            Spacer(
-                modifier = Modifier
-                    .height(30.dp)
-            )
+
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LamanTanamanPreview() {
+    HydropomeTheme {
+        LamanTanamanScreen(
+            plantId = "",
+            isStartPlantEnabled = true,
+            uiState = LamanTanamanUiState(
+                plant = Plant(
+                    title = "Selada Hidroponik",
+                    difficulty = Difficulty.EASY,
+                    duration = "3-5",
+                    image = R.drawable.im_plant_1,
+                    description = "Selada merupakan salah satu tanaman paling populer dalam budidaya hidroponik karena pertumbuhannya yang cepat dan perawatannya yang mudah. Tanaman ini cocok untuk pemula karena tidak memerlukan banyak nutrisi khusus atau perawatan intensif. Selada tumbuh subur di sistem hidroponik seperti NFT (Nutrient Film Technique) dan dapat dipanen dalam waktu 3–5 minggu setelah tanam",
+                    toolsAndMaterials = listOf(
+                        Plant.ToolMaterial(
+                            title = "Wadah atau Bak Tanam",
+                            description = "Tempat air nutrisi dan tanaman diletakkan."
+                        ),
+                        Plant.ToolMaterial(
+                            title = "Net Pot / Pot kecil berlubang",
+                            description = "Untuk menahan tanaman dan media tanam."
+                        ),
+                        Plant.ToolMaterial(
+                            title = "Spons/Rockwool",
+                            description = "Media tanam tempat benih tumbuh."
+                        ),
+                        Plant.ToolMaterial(
+                            title = "Benih selada"
+                        ),
+                        Plant.ToolMaterial(
+                            title = "Air Bersih"
+                        )
+                    )
+                ),
+            ),
+            videoPlayer = {},
+            onPlantRefresh = {},
+            onStartPlant = {},
+            navController = rememberNavController()
+        )
     }
 }

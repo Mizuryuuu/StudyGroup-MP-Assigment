@@ -26,15 +26,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.hydropome.R
+import com.example.hydropome.ui.AppDestination
 import com.example.hydropome.ui.theme.HydropomeTheme
 import com.example.hydropome.ui.theme.AppColors
 
 @Composable
 fun RegisterScreen(
-    onBackClick: () -> Unit = {},
-    onLoginClick: () -> Unit = {},
-    onRegisterClick: (fullName: String, email: String, password: String, confirmPassword: String) -> Unit = { _, _, _, _ -> }
+    navController: NavController
 ) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -51,7 +52,9 @@ fun RegisterScreen(
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = {
+                    navController.popBackStack(AppDestination.Onboarding, false)
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_arrow_left_alt_24),
                         contentDescription = "Kembali"
@@ -197,7 +200,11 @@ fun RegisterScreen(
 
             // ==== Tombol Daftar ====
             Button(
-                onClick = { onRegisterClick(fullName, email, password, confirmPassword) },
+                onClick = {
+                    navController.navigate(AppDestination.Login) {
+                        popUpTo(0)
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -228,7 +235,11 @@ fun RegisterScreen(
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
                         .padding(start = 4.dp)
-                        .clickable { onLoginClick() }
+                        .clickable {
+                            navController.navigate(AppDestination.Login) {
+                                popUpTo(0)
+                            }
+                        }
                 )
             }
 
@@ -241,6 +252,8 @@ fun RegisterScreen(
 @Composable
 private fun RegisterScreenPreview() {
     HydropomeTheme {
-        RegisterScreen()
+        RegisterScreen(
+            navController = rememberNavController()
+        )
     }
 }

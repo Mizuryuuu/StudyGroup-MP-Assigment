@@ -26,15 +26,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.hydropome.R
+import com.example.hydropome.ui.AppDestination
 import com.example.hydropome.ui.theme.AppColors
 import com.example.hydropome.ui.theme.HydropomeTheme
 
 @Composable
 fun LoginScreen(
-    onBackClick: () -> Unit = {},
-    onRegisterClick: () -> Unit = {},
-    onLoginClick: (email: String, password: String) -> Unit = { _, _ -> }
+    navController: NavController
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -49,7 +50,9 @@ fun LoginScreen(
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = {
+                    navController.popBackStack(AppDestination.Onboarding, false)
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_arrow_left_alt_24),
                         contentDescription = "Kembali"
@@ -139,7 +142,11 @@ fun LoginScreen(
 
             // ==== Tombol Masuk ====
             Button(
-                onClick = { onLoginClick(email, password) },
+                onClick = {
+                    navController.navigate(AppDestination.Personalization) {
+                        popUpTo(0)
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -170,7 +177,11 @@ fun LoginScreen(
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
                         .padding(start = 4.dp)
-                        .clickable { onRegisterClick() }
+                        .clickable {
+                            navController.navigate(AppDestination.Register) {
+                                popUpTo(0)
+                            }
+                        }
                 )
             }
 
@@ -183,6 +194,8 @@ fun LoginScreen(
 @Composable
 private fun LoginScreenPreview() {
     HydropomeTheme {
-        LoginScreen()
+        LoginScreen(
+            navController = rememberNavController()
+        )
     }
 }

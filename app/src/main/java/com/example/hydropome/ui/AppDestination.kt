@@ -19,6 +19,9 @@ sealed class AppDestination {
     data object Login : AppDestination()
 
     @Serializable
+    data object Register : AppDestination()
+
+    @Serializable
     data class PlantDetails(
         val plantId: String,
         val isStartPlantEnabled: Boolean = true

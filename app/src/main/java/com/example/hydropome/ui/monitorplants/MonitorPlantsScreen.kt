@@ -244,23 +244,23 @@ fun MonitorPlantsScreen(
                                                 fontWeight = FontWeight.W400
                                             )
                                         }
-                                        Spacer(Modifier.weight(1f))
-                                        CustomButton(
-                                            text = "Pantau",
-                                            onClick = {
-                                                navController.navigate(
-                                                    AppDestination.PlantProgress(
-                                                        plantsProgress.id
-                                                    )
-                                                )
-                                            },
-                                            width = 64.dp,
-                                            height = 36.dp,
-                                            radius = 12.dp,
-                                            paddingHorizontal = 0.dp,
-                                            fontSize = 12.sp
-                                        )
                                     }
+                                    Spacer(Modifier.weight(1f))
+                                    CustomButton(
+                                        text = "Pantau",
+                                        onClick = {
+                                            navController.navigate(
+                                                AppDestination.PlantProgress(
+                                                    plantsProgress.id
+                                                )
+                                            )
+                                        },
+                                        width = 64.dp,
+                                        height = 36.dp,
+                                        radius = 12.dp,
+                                        paddingHorizontal = 0.dp,
+                                        fontSize = 12.sp
+                                    )
                                 }
                                 if (index + 1 < uiState.plantProgresses.size) {
                                     Spacer(Modifier.height(16.dp))
