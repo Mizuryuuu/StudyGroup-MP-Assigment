@@ -17,5 +17,8 @@ sealed class AppDestination {
     ) : AppDestination()
 
     @Serializable
+    data class ProductDetails(val productId: String) : AppDestination()
+
+    @Serializable
     data class PlantProgress(val plantProgressId: String): AppDestination()
 }
