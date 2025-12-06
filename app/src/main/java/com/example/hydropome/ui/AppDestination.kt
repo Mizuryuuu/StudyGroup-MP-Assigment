@@ -5,10 +5,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class AppDestination {
     @Serializable
+    data object Splash : AppDestination()
+
+    @Serializable
+    data object Onboarding : AppDestination()
+    @Serializable
     data object Personalization: AppDestination()
 
     @Serializable
     data object Main : AppDestination()
+
+    @Serializable
+    data object Login : AppDestination()
 
     @Serializable
     data class PlantDetails(
